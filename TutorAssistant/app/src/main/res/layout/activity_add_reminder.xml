@@ -11,7 +11,7 @@
         android:layout_width="243dp"
         android:layout_height="77dp"
         android:layout_gravity="center"
-        android:layout_marginLeft="70dp"
+       android:layout_marginHorizontal="80dp"
         android:layout_marginTop="10dp"
         android:src="@drawable/namelogo"
         android:textAlignment="center" />
@@ -35,8 +35,7 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="7"
-                >
+                android:layout_weight="5">
 
             </Space>
 
@@ -79,13 +78,22 @@
                 android:inputType="number"
                 android:maxLength="2"
                 android:paddingLeft="10dp" />
+            <EditText
+                android:id="@+id/classes_taken"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:backgroundTint="@color/oneforall"
+                android:ems="10"
+                android:hint="Classes Taken"
+                android:inputType="number"
+                android:maxLength="2"
+                android:paddingLeft="10dp" />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="4"
-                >
-
+                android:layout_weight="2.2">
 
 
             </Space>
@@ -95,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:background="@drawable/bc"
-                android:layout_weight="1.4"
+                android:layout_weight="1.5"
                 app:elevation="25dp"
                 android:textSize="18sp"
                 android:textAllCaps="false"
@@ -105,11 +113,25 @@
                 android:elevation="50dp"
                 android:textColor="@color/white"
                 android:text="CONFIRM" />
+
+
         </LinearLayout>
 
 
 
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/navigationbottom_reminder"
+        app:itemBackground="@color/white"
+        app:itemTextColor="@drawable/selector"
+        app:itemIconTint="@drawable/selector"
+        app:menu ="@menu/menu_navigation"
+        android:layout_alignParentBottom="true"
+        android:elevation="25dp"
+
+        />
 
 
 

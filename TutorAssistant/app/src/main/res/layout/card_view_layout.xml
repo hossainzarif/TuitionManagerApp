@@ -10,9 +10,10 @@
     app:cardElevation="10dp"
 
     >
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="125dp"
         android:paddingLeft="2dp"
 
 
@@ -20,7 +21,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="50dp"
             android:orientation="vertical"
             android:paddingLeft="2dp"
 
@@ -29,31 +30,25 @@
             <TextView
                 android:id="@+id/text_name"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:text="Name of Tuition"
+                android:layout_height="50dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="2dp"
 
-
+                android:text="Name of TuitionyX"
                 android:textAlignment="textStart"
                 android:textColor="@color/oneforall"
                 android:textSize="30sp" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="40dp">
-
-            </Space>
 
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
             android:id="@+id/bro"
-            android:paddingLeft="2dp"
-            android:layout_marginTop="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="55dp"
             android:orientation="horizontal"
-
+            android:paddingLeft="2dp"
 
 
             >
@@ -63,8 +58,8 @@
                 android:id="@+id/name_of_day"
                 android:layout_width="189dp"
                 android:layout_height="match_parent"
-                android:paddingTop="20dp"
-                android:text="Day"
+                android:paddingLeft="5dp"
+                android:paddingBottom="2dp"
                 android:textAlignment="textStart"
                 android:textColor="@color/oneforall"
                 android:textSize="25sp"
@@ -75,28 +70,28 @@
                 android:id="@+id/total_days"
                 android:layout_width="190dp"
                 android:layout_height="match_parent"
-                android:paddingTop="20dp"
+                android:paddingRight="5dp"
                 android:text="0"
                 android:textAlignment="center"
                 android:textColor="@color/oneforall"
-                android:textSize="30sp" />
+                android:textSize="25sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:paddingLeft="2dp"
-            android:layout_marginTop="135dp"
-            android:orientation="horizontal">
+            android:layout_height="45dp"
+            android:layout_marginTop="90dp"
+            android:orientation="horizontal"
+            android:paddingLeft="2dp">
 
             <TextView
                 android:id="@+id/datefor"
                 android:layout_width="189dp"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="5dp"
-
-                android:text="____/_____/____"
+                android:paddingLeft="5dp"
+                android:text="dd mm,day"
                 android:textAlignment="textStart"
                 android:textColor="@color/oneforall"
                 android:textSize="20sp"
@@ -107,13 +102,13 @@
                 android:id="@+id/simpletext"
                 android:layout_width="190dp"
                 android:layout_height="match_parent"
+                android:paddingRight="5dp"
                 android:paddingBottom="5dp"
-                android:text="Days"
+                android:text="Classes"
+
                 android:textAlignment="center"
                 android:textColor="@color/oneforall"
                 android:textSize="20sp" />
-
-
 
 
         </LinearLayout>

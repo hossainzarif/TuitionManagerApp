@@ -2,6 +2,7 @@ package com.example.tutorassistant;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
@@ -25,6 +26,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static  final String Time = "time" ;
     private static  final String Classes = "classes_taken" ;
 
+
+    private static final  String initialQuery = "SELECT * From "+Table_name;
+
+
     private Context context ;
 
 
@@ -42,9 +47,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         try {
             Toast.makeText(context,"Tables ARe Created",Toast.LENGTH_LONG).show();             //toast for Oncreate
 
-            sqLiteDatabase.execSQL("CREATE TABLE " + Table_name + "  ( " + Tuition_id + " INTEGER PRIMARY KEY AUTOINCREMENT," + Tuition_name + " VARCHAR2(100) NOT NULL," + Amount + " INTEGER NOT NULL," + Payment + " INTEGER NOT NULL) ; ");
+            sqLiteDatabase.execSQL("CREATE TABLE " + Table_name + "  ( " + Tuition_id + " INTEGER PRIMARY KEY AUTOINCREMENT," + Tuition_name + " VARCHAR2(100) NOT NULL," + Amount + " INTEGER NOT NULL," + Payment + " INTEGER NOT NULL," + Classes + " INTEGER NOT NULL) ; ");
 
-            sqLiteDatabase.execSQL("CREATE TABLE " + Table_name_2 + "  ( " + Ref_id + " INTEGER ," + Date  + " VARCHAR2(100) NOT NULL," + Time + " Varchar2(10) NOT NULL," + Classes + " INTEGER NOT NULL,"
+            sqLiteDatabase.execSQL("CREATE TABLE " + Table_name_2 + "  ( " + Ref_id + " INTEGER ," + Date  + " VARCHAR2(100) NOT NULL," + Time + " Varchar2(10) NOT NULL,"
                     + " FOREIGN KEY (" + Ref_id + ") REFERENCES " + Table_name + "(" + Tuition_id + "));");
         } catch(Exception e)
         {
@@ -60,11 +65,29 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    public void insertData(String name ,String taka ,String days)
+    public long insertData(String name ,String taka ,String days,String Classestaken)
     {
        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase() ;
         ContentValues contentValues = new ContentValues() ;
-        contentValues.put();
+        contentValues.put(Tuition_name,name);
+        contentValues.put(Amount,taka);
+        contentValues.put(Payment,days);
+        contentValues.put(Classes,Classestaken);
+        //sqLiteDatabase.insert(Tuition_name,null,contentValues) ;
+        long id = sqLiteDatabase.insert(Table_name,null,contentValues);
+
+        return id ;
+
+    }
+
+
+    public Cursor displayAlldeta()
+    {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase() ;
+        Cursor cursor =sqLiteDatabase.rawQuery(initialQuery,null);
+
+        return cursor ;
+
     }
 
 
