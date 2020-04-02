@@ -9,11 +9,11 @@
     <ImageView
         android:id="@+id/img"
         android:layout_width="243dp"
-        android:layout_height="77dp"
+        android:layout_height="68dp"
         android:layout_gravity="center"
         android:layout_marginHorizontal="80dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/namelogo"
+        android:src="@drawable/newlogo"
         android:textAlignment="center" />
 
 
@@ -35,14 +35,14 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3.5" />
+            android:layout_weight="3" />
 
 
         <TextView
             android:id="@+id/nameofthetuition"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5"
+            android:layout_weight="1.2"
             android:text="Name of The Student"
             android:textAlignment="textStart"
             android:textAllCaps="false"
@@ -57,7 +57,7 @@
             android:id="@+id/amountoftaka"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5"
+            android:layout_weight="1.2"
             android:text="Payment amount"
             android:textAlignment="textStart"
             android:textAllCaps="false"
@@ -67,6 +67,22 @@
 
             />
 
+
+        <TextView
+            android:id="@+id/ClassPermonth_SSSS"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.8"
+            android:text="Class Per month"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:textColor="@color/oneforall"
+            android:textSize="25sp"
+
+
+            />
+
+
         <TextView
             android:id="@+id/Daysyouvegone"
             android:layout_width="match_parent"
@@ -75,33 +91,67 @@
             android:text="0"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:textColor="@color/oneforall"
 
+            android:textColor="@color/oneforall"
             android:textSize="40sp" />
 
         <TextView
             android:id="@+id/simpletext2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5"
+            android:layout_weight="1.6"
             android:text="Classes"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/oneforall"
             android:textSize="25sp" />
 
-        <Button
-            android:id="@+id/button_for_Add"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.4"
-            android:background="@drawable/bc"
-            android:elevation="15dp"
-            android:text="ADD CLASS"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:layout_weight="1.7"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/button_for_Remove"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bc"
+                android:elevation="25dp"
+                android:text="REMOVE "
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/button_for_ADD"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bc"
+                android:elevation="25dp"
+                android:text="ADD"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+
+
+        </LinearLayout>
+
+
+
+
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -124,7 +174,7 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5" />
+            android:layout_weight="2.3" />
 
         <Button
             android:id="@+id/button_to_save"
@@ -133,7 +183,7 @@
             android:layout_weight="1.4"
             android:background="@drawable/bc"
             android:elevation="15dp"
-            android:text="CONFIRM REMINDER"
+            android:text="CONFIRM "
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="@color/white"
@@ -146,7 +196,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/navigationbottom"
+        android:id="@+id/navigationbottom_add_daily"
         app:itemBackground="@color/white"
         app:itemTextColor="@drawable/selector"
         app:itemIconTint="@drawable/selector"

@@ -17,17 +17,22 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static  final String Table_name_2 = "tuition_reminder" ;
     private static  final int version= 1 ;
 
+   private static int Rank_Count =0 ;
+    private static int will_updated  ;
     private static  final String Tuition_name = "Name" ;
     private static  final String Tuition_id = "tuition_id" ;
+    private static  final String Rank = "rank_id" ;
     private static  final String Amount = "amount" ;
     private static  final String Payment = "Payment" ;
     private static  final String Ref_id = "Refere_id" ;
     private static  final String Date = "date" ;
     private static  final String Time = "time" ;
+
     private static  final String Classes = "classes_taken" ;
 
 
     private static final  String initialQuery = "SELECT * From "+Table_name;
+    private String ID_Passed ;
 
 
     private Context context ;
@@ -47,7 +52,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         try {
             Toast.makeText(context,"Tables ARe Created",Toast.LENGTH_LONG).show();             //toast for Oncreate
 
-            sqLiteDatabase.execSQL("CREATE TABLE " + Table_name + "  ( " + Tuition_id + " INTEGER PRIMARY KEY AUTOINCREMENT," + Tuition_name + " VARCHAR2(100) NOT NULL," + Amount + " INTEGER NOT NULL," + Payment + " INTEGER NOT NULL," + Classes + " INTEGER NOT NULL) ; ");
+            sqLiteDatabase.execSQL("CREATE TABLE " + Table_name + "  ( " + Tuition_id + " INTEGER PRIMARY KEY AUTOINCREMENT," + Tuition_name + " VARCHAR2(100) NOT NULL," + Amount + " INTEGER NOT NULL," + Payment + " INTEGER NOT NULL," + Classes + " INTEGER NOT NULL," +Rank+ " INTEGER NOT NULL) ; ");
 
             sqLiteDatabase.execSQL("CREATE TABLE " + Table_name_2 + "  ( " + Ref_id + " INTEGER ," + Date  + " VARCHAR2(100) NOT NULL," + Time + " Varchar2(10) NOT NULL,"
                     + " FOREIGN KEY (" + Ref_id + ") REFERENCES " + Table_name + "(" + Tuition_id + "));");
@@ -64,19 +69,41 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public void reset()
+    {
+        Rank_Count=0 ;
+    }
 
     public long insertData(String name ,String taka ,String days,String Classestaken)
     {
+
+
+        Rank_Count=Rank_Count+1 ;
+        String rank_String_count = String.valueOf(Rank_Count) ;
+
        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase() ;
         ContentValues contentValues = new ContentValues() ;
         contentValues.put(Tuition_name,name);
         contentValues.put(Amount,taka);
         contentValues.put(Payment,days);
         contentValues.put(Classes,Classestaken);
+        contentValues.put(Rank,rank_String_count);
         //sqLiteDatabase.insert(Tuition_name,null,contentValues) ;
         long id = sqLiteDatabase.insert(Table_name,null,contentValues);
 
         return id ;
+
+    }
+
+    public boolean update_TotalClasses(String id,String Classestaken )
+    {
+        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase() ;
+        ContentValues contentValues_update = new ContentValues() ;
+        contentValues_update.put(Classes,Classestaken);
+        //sqLiteDatabase.insert(Tuition_name,null,contentValues) ;
+         sqLiteDatabase.update(Table_name,contentValues_update,"rank_id = ?",new String[]{id}) ;
+
+        return true ;
 
     }
 
@@ -91,4 +118,68 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+
+
+    public Cursor displayAlldetafromReminder(String passed) {
+
+        ID_Passed =passed ;
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase() ;
+        Cursor cursorRemind =sqLiteDatabase.rawQuery("SELECT * From "+Table_name+" where rank_id = "+ID_Passed,null);
+
+
+        return cursorRemind ;
+    }
+
+    public boolean deleteData(String id )
+    {
+        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase() ;
+
+
+        sqLiteDatabase.execSQL("delete from "+Table_name+" where "+Rank+" = "+id+" ;") ;
+
+        Rank_Count=Rank_Count-1 ;
+        return true ;
+
+    }
+
+    public void update_Rank(int size,int adap_position) {
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase() ;
+
+        Toast.makeText(context.getApplicationContext(), "position"+adap_position+" SIZE "+size, Toast.LENGTH_SHORT).show();
+
+
+
+        if(size!=adap_position) {
+            for (int i = adap_position+2; i <= size+1; i++) {
+
+
+                sqLiteDatabase.execSQL("UPDATE tuition_details SET rank_id = rank_id-1 WHERE rank_id = "+i+" ;"
+                );
+
+
+            }
+
+
+        }
+
+        else
+        {
+            Toast.makeText(context.getApplicationContext(), "Objecklist SIze" + size, Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+ /*   public Cursor display_ultimate(String passed) {
+
+        ID_Passed =passed ;
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase() ;
+        Cursor cursorRemind =sqLiteDatabase.rawQuery("SELECT * From "+Table_name+" where "+Tuition_id+" = "+ID_Passed,null);
+
+
+        return cursorRemind ;
+    } */
 }

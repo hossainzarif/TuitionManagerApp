@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class MyAdapterClass extends RecyclerView.Adapter<MyAdapterClass.MyViewHolder> {
 
+    private static Clicklistener clicklistener ;
     ArrayList<TuitionModelClass> objectmodelclass ;
 
     public MyAdapterClass(ArrayList<TuitionModelClass> objectmodelclass) {
@@ -46,7 +47,7 @@ public class MyAdapterClass extends RecyclerView.Adapter<MyAdapterClass.MyViewHo
         return objectmodelclass.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
         TextView NameTextView,DateTextview,DaysTextView,AjkeKiBarTextView ;
         public MyViewHolder(@NonNull View itemView) {
@@ -57,6 +58,35 @@ public class MyAdapterClass extends RecyclerView.Adapter<MyAdapterClass.MyViewHo
             DaysTextView = itemView.findViewById(R.id.total_days) ;
             AjkeKiBarTextView = itemView.findViewById(R.id.name_of_day) ;
 
+
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            clicklistener.OnItemclick(getAdapterPosition(),view);
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            clicklistener.OnItemLongClick(getAdapterPosition(),view);
+            return false;
         }
     }
+
+
+    public interface Clicklistener
+    {
+        void OnItemclick(int pos ,View v) ;
+        void OnItemLongClick(int pos ,View v) ;
+    }
+
+    public void setOnItemClickListener(Clicklistener clickListener)
+    {
+        MyAdapterClass.clicklistener = clickListener ;
+    }
+
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,6 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="125dp"
         android:paddingLeft="2dp"
+
+
+
+        android:background="?android:attr/selectableItemBackground"
+
 
 
         >
@@ -59,22 +65,22 @@
                 android:layout_width="189dp"
                 android:layout_height="match_parent"
                 android:paddingLeft="5dp"
-                android:paddingBottom="2dp"
+                android:paddingTop="5dp"
+                android:text="8:00 am"
                 android:textAlignment="textStart"
                 android:textColor="@color/oneforall"
-                android:textSize="25sp"
-
-                />
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/total_days"
                 android:layout_width="190dp"
                 android:layout_height="match_parent"
+                android:paddingTop="5dp"
                 android:paddingRight="5dp"
                 android:text="0"
                 android:textAlignment="center"
                 android:textColor="@color/oneforall"
-                android:textSize="25sp" />
+                android:textSize="22sp" />
 
         </LinearLayout>
 
@@ -91,7 +97,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="5dp"
                 android:paddingLeft="5dp"
-                android:text="dd mm,day"
+                android:text="Wed,1 Apr"
                 android:textAlignment="textStart"
                 android:textColor="@color/oneforall"
                 android:textSize="20sp"

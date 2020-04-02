@@ -9,11 +9,11 @@
     <ImageView
         android:id="@+id/img"
         android:layout_width="243dp"
-        android:layout_height="77dp"
+        android:layout_height="68dp"
         android:layout_gravity="center"
        android:layout_marginHorizontal="80dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/namelogo"
+        android:src="@drawable/newlogo"
         android:textAlignment="center" />
 
 
@@ -93,7 +93,7 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2.2">
+                android:layout_weight="2.8">
 
 
             </Space>
@@ -102,17 +102,17 @@
                 android:id="@+id/button_for_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_weight="1.4"
                 android:background="@drawable/bc"
-                android:layout_weight="1.5"
-                app:elevation="25dp"
-                android:textSize="18sp"
-                android:textAllCaps="false"
-
+                android:elevation="50dp"
+                android:text="CONFIRM"
                 android:textAlignment="center"
 
-                android:elevation="50dp"
+                android:textAllCaps="false"
+
                 android:textColor="@color/white"
-                android:text="CONFIRM" />
+                android:textSize="18sp"
+                app:elevation="25dp" />
 
 
         </LinearLayout>

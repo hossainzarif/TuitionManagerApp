@@ -3,18 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="?android:attr/selectableItemBackground"
     android:layout_height="match_parent"
+
     tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/img"
         android:layout_width="243dp"
-        android:layout_height="77dp"
+        android:layout_height="68dp"
         android:layout_gravity="center"
 
         android:layout_marginHorizontal="80dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/namelogo"
+        android:src="@drawable/newlogo"
         android:textAlignment="center" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -23,6 +25,12 @@
         android:layout_height="match_parent"
         android:layout_marginTop="80dp"
         android:padding="2dp"
+        android:foreground="?android:attr/selectableItemBackground"
+
+        android:clickable="true"
+        android:focusable="true"
+
+
         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
