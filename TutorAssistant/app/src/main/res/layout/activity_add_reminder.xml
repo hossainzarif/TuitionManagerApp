@@ -123,7 +123,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/navigationbottom_reminder"
+        android:id="@+id/botttom_update"
         app:itemBackground="@color/white"
         app:itemTextColor="@drawable/selector"
         app:itemIconTint="@drawable/selector"

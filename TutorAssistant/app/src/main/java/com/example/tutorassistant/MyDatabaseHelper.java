@@ -17,7 +17,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static  final String Table_name_2 = "tuition_reminder" ;
     private static  final int version= 1 ;
 
-   private static int Rank_Count =0 ;
+   private static int Rank_Count ;
     private static int will_updated  ;
     private static  final String Tuition_name = "Name" ;
     private static  final String Tuition_id = "tuition_id" ;
@@ -30,13 +30,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private static  final String Classes = "classes_taken" ;
 
-
     private static final  String initialQuery = "SELECT * From "+Table_name;
     private String ID_Passed ;
 
 
     private Context context ;
-
+    private String Rank_string ;
 
 
 
@@ -55,7 +54,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             sqLiteDatabase.execSQL("CREATE TABLE " + Table_name + "  ( " + Tuition_id + " INTEGER PRIMARY KEY AUTOINCREMENT," + Tuition_name + " VARCHAR2(100) NOT NULL," + Amount + " INTEGER NOT NULL," + Payment + " INTEGER NOT NULL," + Classes + " INTEGER NOT NULL," +Rank+ " INTEGER NOT NULL) ; ");
 
             sqLiteDatabase.execSQL("CREATE TABLE " + Table_name_2 + "  ( " + Ref_id + " INTEGER ," + Date  + " VARCHAR2(100) NOT NULL," + Time + " Varchar2(10) NOT NULL,"
-                    + " FOREIGN KEY (" + Ref_id + ") REFERENCES " + Table_name + "(" + Tuition_id + "));");
+                    + " FOREIGN KEY (" + Ref_id + ") REFERENCES " + Table_name + "(" + Rank + "));");
         } catch(Exception e)
         {
             Toast.makeText(context,"Exception :"+e,Toast.LENGTH_LONG).show();
@@ -76,12 +75,35 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     public long insertData(String name ,String taka ,String days,String Classestaken)
     {
+        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase() ;
+
+
+
+        Cursor cursor_rank = sqLiteDatabase.rawQuery(" Select MAX(rank_id) from tuition_details ;", null);
+
+        if(cursor_rank.getCount()==0)
+        {
+            Rank_Count=0 ;
+        }
+        else
+        {
+            while(cursor_rank.moveToNext())
+
+            {
+                Rank_Count= cursor_rank.getInt(0) ;
+            }
+        }
+
+
+
+
+
 
 
         Rank_Count=Rank_Count+1 ;
         String rank_String_count = String.valueOf(Rank_Count) ;
 
-       SQLiteDatabase sqLiteDatabase= this.getWritableDatabase() ;
+
         ContentValues contentValues = new ContentValues() ;
         contentValues.put(Tuition_name,name);
         contentValues.put(Amount,taka);
@@ -133,12 +155,21 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     public boolean deleteData(String id )
     {
+
+
+
         SQLiteDatabase sqLiteDatabase= this.getWritableDatabase() ;
 
 
         sqLiteDatabase.execSQL("delete from "+Table_name+" where "+Rank+" = "+id+" ;") ;
 
-        Rank_Count=Rank_Count-1 ;
+
+
+
+
+
+
+
         return true ;
 
     }
@@ -147,7 +178,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase() ;
 
-        Toast.makeText(context.getApplicationContext(), "position"+adap_position+" SIZE "+size, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(context.getApplicationContext(), "position"+adap_position+" SIZE "+size, Toast.LENGTH_SHORT).show();
 
 
 
@@ -166,7 +197,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         else
         {
-            Toast.makeText(context.getApplicationContext(), "Objecklist SIze" + size, Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(context.getApplicationContext(), "Objecklist SIze" + size, Toast.LENGTH_SHORT).show();
         }
 
 
@@ -182,4 +213,54 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         return cursorRemind ;
     } */
+
+
+
+
+
+
+ //ALL update happening
+
+
+
+
+
+
+    public void update_name (String id,String name )
+    {
+        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase() ;
+        ContentValues contentValues_update = new ContentValues() ;
+        contentValues_update.put(Tuition_name,name);
+        //sqLiteDatabase.insert(Tuition_name,null,contentValues) ;
+        sqLiteDatabase.update(Table_name,contentValues_update,"rank_id = ?",new String[]{id}) ;
+
+         Toast.makeText(context.getApplicationContext(), "Entered" , Toast.LENGTH_SHORT).show();
+
+
+    }
+
+
+    public void update_amount(String id, String amount) {
+
+        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase() ;
+        ContentValues contentValues_update = new ContentValues() ;
+        contentValues_update.put(Amount,amount);
+        //sqLiteDatabase.insert(Tuition_name,null,contentValues) ;
+        sqLiteDatabase.update(Table_name,contentValues_update,"rank_id = ?",new String[]{id}) ;
+
+
+    }
+    public void update_payment(String id, String payt) {
+
+        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase() ;
+        ContentValues contentValues_update = new ContentValues() ;
+        contentValues_update.put(Payment,payt);
+        //sqLiteDatabase.insert(Tuition_name,null,contentValues) ;
+        sqLiteDatabase.update(Table_name,contentValues_update,"rank_id = ?",new String[]{id}) ;
+
+
+    }
+
+
+
 }

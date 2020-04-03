@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -21,17 +23,18 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.sql.Time;
 import java.util.Calendar;
 
 public class Add_Daily_Reminder extends AppCompatActivity {
 
 
-    private TextView NameofTuition,Totalclass,Amount,classpmonth ;
+    private TextView NameofTuition,Totalclass,Amount,classpmonth,Calender_show,Time_show ;
     MyDatabaseHelper myDatabaseHelper ;
     BottomNavigationView bottomNavigationView_add_daily ;
-
+    AlertDialog.Builder alert_delet ;
     Button dateButton,Add_button,Remove_button;
-
+    private int count ;
     private String OkFatman ,myposition,ultimate_class;
             private  static String Achieve_class ;
     @Override
@@ -46,6 +49,8 @@ public class Add_Daily_Reminder extends AppCompatActivity {
         Add_button =findViewById(R.id.button_for_ADD);
         Remove_button =findViewById(R.id.button_for_Remove);
 
+        Calender_show = findViewById(R.id.calender) ;
+        Time_show = findViewById(R.id.time) ;
 
 
         NameofTuition = (TextView)findViewById(R.id.nameofthetuition) ;
@@ -109,33 +114,73 @@ public class Add_Daily_Reminder extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
                 String ans_add[]=ShowTheDatasefromReminder(myposition) ;
                 Achieve_class =  ans_add[0] ;
 
-
-                int count = Integer.parseInt(Achieve_class) ;
+              count = Integer.parseInt(Achieve_class) ;
                 count = count+1 ;
 
-                if(count> Integer.parseInt(ultimate_class))
+                if(count >= Integer.parseInt(ultimate_class))
                 {
 
-                    count= Integer.parseInt(ultimate_class);
-                    Toast.makeText(getApplicationContext(),"Max Class Count Reached Already",Toast.LENGTH_SHORT).show();
+
+
+
+                    //Toast.makeText(getApplicationContext(),"Max Class Count Reached Already",Toast.LENGTH_SHORT).show();
+
+
+
+                    alert_delet = new AlertDialog.Builder(Add_Daily_Reminder.this) ;
+                    alert_delet.setTitle("Reset ") ;
+                    alert_delet.setMessage("  Max class reached start over?") ;
+
+                    alert_delet.setIcon(R.drawable.reset_alert_foreground);
+
+
+
+
+
+
+                    alert_delet.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            count= 0;
+                            reset_class(count);
+
+                        }
+                    }) ;
+
+                    alert_delet.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            count= Integer.parseInt(ultimate_class);
+                            reset_class(count);
+
+                        }
+                    });
+
+                    alert_delet.setCancelable(false) ;
+
+                    AlertDialog alertDialog = alert_delet.create() ;
+                    alertDialog.show();
+
+
+
                 }
 
 
-                String Final_out = String.valueOf(count) ;
 
-
-
-                myDatabaseHelper.update_TotalClasses(myposition,Final_out) ;
-                Totalclass.setText(Final_out) ;
-
+                reset_class(count) ;
 
 
 
             }
         });
+
+
 
 
 
@@ -155,9 +200,7 @@ public class Add_Daily_Reminder extends AppCompatActivity {
                     //Toast.makeText(getApplicationContext(),"Max Class Count Reached Already",Toast.LENGTH_SHORT).show();
                 }
 
-                String Final_out = String.valueOf(count) ;
-                myDatabaseHelper.update_TotalClasses(myposition,Final_out) ;
-                Totalclass.setText(Final_out);
+                reset_class(count);
 
             }
         });
@@ -169,9 +212,14 @@ public class Add_Daily_Reminder extends AppCompatActivity {
 
     }
 
+    private void reset_class(int counting) {
+
+        String Final_out = String.valueOf(counting) ;
+        myDatabaseHelper.update_TotalClasses(myposition,Final_out) ;
+        Totalclass.setText(Final_out) ;
 
 
-
+    }
 
 
     public String[] ShowTheDatasefromReminder(String position) {
@@ -244,7 +292,7 @@ public class Add_Daily_Reminder extends AppCompatActivity {
                 calendar1.set(Calendar.DATE, date);
                 CharSequence dateCharSequence = DateFormat.format("MMM d, yyyy", calendar1);
 
-
+                Time_show.setText(dateCharSequence);
 
             }
         }, YEAR, MONTH, DATE);
@@ -268,8 +316,12 @@ public class Add_Daily_Reminder extends AppCompatActivity {
                 CharSequence timeCharSequence = DateFormat.format("hh:mm a", calendar1);
 
 
+                Calender_show.setText(timeCharSequence);
+
             }
         }, HOUR, MINUTE, is24HourFormat);
+
+
 
         timePickerDialog.show();
 
