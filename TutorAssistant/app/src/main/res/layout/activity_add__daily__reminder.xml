@@ -99,7 +99,7 @@
             android:id="@+id/simpletext2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.6"
+            android:layout_weight="1.4"
             android:text="Classes"
             android:textAlignment="center"
             android:textAllCaps="false"
@@ -159,16 +159,19 @@
                 android:id="@+id/calender"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-
-                android:layout_weight="1"
-                android:text="Calender" />
+                android:layout_weight=".8"
+                android:text="Calender"
+                android:textColor="@color/oneforall"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/time"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="Time" />
+                android:layout_weight=".8"
+                android:text="time"
+                android:textColor="@color/oneforall"
+                android:textSize="15sp" />
         </LinearLayout>
 
 
@@ -193,7 +196,7 @@
             android:layout_weight=".5" />
 
         <Button
-            android:id="@+id/button_to_save"
+            android:id="@+id/button_to_save_reminder"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.4"

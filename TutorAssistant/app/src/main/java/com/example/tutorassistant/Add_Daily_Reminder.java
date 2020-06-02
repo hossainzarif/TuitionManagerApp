@@ -33,10 +33,12 @@ public class Add_Daily_Reminder extends AppCompatActivity {
     MyDatabaseHelper myDatabaseHelper ;
     BottomNavigationView bottomNavigationView_add_daily ;
     AlertDialog.Builder alert_delet ;
-    Button dateButton,Add_button,Remove_button;
+    Button dateButton,Add_button,Remove_button ,Confirm_reminder;
     private int count ;
-    private String OkFatman ,myposition,ultimate_class;
-            private  static String Achieve_class ;
+    private String OkFatman ,myposition,ultimate_class,date_string,time_string;
+    private  static String Achieve_class ;
+private long bruh ;
+    private CharSequence timeCharSequence,dateCharSequence ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +60,7 @@ public class Add_Daily_Reminder extends AppCompatActivity {
         classpmonth = (TextView)findViewById(R.id.ClassPermonth_SSSS) ;
         Totalclass=  (TextView)findViewById(R.id.Daysyouvegone) ;
         bottomNavigationView_add_daily = (BottomNavigationView) findViewById(R.id.navigationbottom_add_daily);
-
+        Confirm_reminder = findViewById(R.id.button_to_save_reminder) ;
 
 
 
@@ -109,6 +111,28 @@ public class Add_Daily_Reminder extends AppCompatActivity {
             }
         });
 
+
+        Confirm_reminder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+               long bruh = yeahbuoyy() ;
+
+
+                if(bruh>0)
+                {
+                    Toast.makeText(getApplicationContext().getApplicationContext(), "Reminder Set", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext().getApplicationContext(), "Select Date and Time", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
 
         Add_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -290,9 +314,11 @@ public class Add_Daily_Reminder extends AppCompatActivity {
                 calendar1.set(Calendar.YEAR, year);
                 calendar1.set(Calendar.MONTH, month);
                 calendar1.set(Calendar.DATE, date);
-                CharSequence dateCharSequence = DateFormat.format("MMM d, yyyy", calendar1);
+                 dateCharSequence = DateFormat.format("MMM d, yyyy", calendar1);
 
                 Time_show.setText(dateCharSequence);
+
+               date_string= String.valueOf(dateCharSequence) ;
 
             }
         }, YEAR, MONTH, DATE);
@@ -313,11 +339,11 @@ public class Add_Daily_Reminder extends AppCompatActivity {
                 Calendar calendar1 = Calendar.getInstance();
                 calendar1.set(Calendar.HOUR, hour);
                 calendar1.set(Calendar.MINUTE, minute);
-                CharSequence timeCharSequence = DateFormat.format("hh:mm a", calendar1);
+                 timeCharSequence = DateFormat.format("hh:mm a", calendar1);
 
 
                 Calender_show.setText(timeCharSequence);
-
+                time_string= String.valueOf(timeCharSequence) ;
             }
         }, HOUR, MINUTE, is24HourFormat);
 
@@ -327,6 +353,21 @@ public class Add_Daily_Reminder extends AppCompatActivity {
 
     }
 
+
+
+    private long yeahbuoyy()
+    {
+        MyDatabaseHelper myDatabaseHelper =new MyDatabaseHelper(this) ;
+
+
+        if(time_string!=null && date_string!=null) {
+
+             bruh = myDatabaseHelper.insertReminder(Integer.parseInt(myposition), date_string, time_string);
+        }
+
+        return bruh ;
+
+    }
 
     @Override
     public void onBackPressed() {

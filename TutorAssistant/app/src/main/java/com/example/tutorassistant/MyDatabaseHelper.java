@@ -21,6 +21,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static int will_updated  ;
     private static  final String Tuition_name = "Name" ;
     private static  final String Tuition_id = "tuition_id" ;
+    private static  final String Reminder_Id = "reminder_id" ;
     private static  final String Rank = "rank_id" ;
     private static  final String Amount = "amount" ;
     private static  final String Payment = "Payment" ;
@@ -46,15 +47,25 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
+    public void onOpen(SQLiteDatabase sqLiteDatabase) {
+        super.onOpen(sqLiteDatabase);
+        if (!sqLiteDatabase.isReadOnly()) {
+            // Enable foreign key constraints
+            sqLiteDatabase.execSQL("PRAGMA foreign_keys=ON;");
+        }
+    }
+
+
+    @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         try {
             Toast.makeText(context,"Tables ARe Created",Toast.LENGTH_LONG).show();             //toast for Oncreate
 
-            sqLiteDatabase.execSQL("CREATE TABLE " + Table_name + "  ( " + Tuition_id + " INTEGER PRIMARY KEY AUTOINCREMENT," + Tuition_name + " VARCHAR2(100) NOT NULL," + Amount + " INTEGER NOT NULL," + Payment + " INTEGER NOT NULL," + Classes + " INTEGER NOT NULL," +Rank+ " INTEGER NOT NULL) ; ");
+            sqLiteDatabase.execSQL("CREATE TABLE " + Table_name + "  ( " + Tuition_id + " INTEGER PRIMARY KEY AUTOINCREMENT," + Tuition_name + " VARCHAR2(100) NOT NULL," + Amount + " INTEGER NOT NULL," + Payment + " INTEGER NOT NULL," + Classes + " INTEGER NOT NULL," +Rank+ " INTEGER NOT NULL UNIQUE ) ; ");
 
-            sqLiteDatabase.execSQL("CREATE TABLE " + Table_name_2 + "  ( " + Ref_id + " INTEGER ," + Date  + " VARCHAR2(100) NOT NULL," + Time + " Varchar2(10) NOT NULL,"
-                    + " FOREIGN KEY (" + Ref_id + ") REFERENCES " + Table_name + "(" + Rank + "));");
+            sqLiteDatabase.execSQL("CREATE TABLE " + Table_name_2 + "  ( " + Reminder_Id + " INTEGER PRIMARY KEY AUTOINCREMENT," + Ref_id + " INTEGER ," + Date  + " VARCHAR2(100) NOT NULL," + Time + " Varchar2(10) NOT NULL,"
+                    + " FOREIGN KEY (" + Ref_id + ") REFERENCES " + Table_name + "(" + Rank + ") ON DELETE CASCADE );");
         } catch(Exception e)
         {
             Toast.makeText(context,"Exception :"+e,Toast.LENGTH_LONG).show();
@@ -73,6 +84,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Rank_Count=0 ;
     }
 
+
+    //insert--------------------------------------------------------------------------------------------------------------------------
     public long insertData(String name ,String taka ,String days,String Classestaken)
     {
         SQLiteDatabase sqLiteDatabase= this.getWritableDatabase() ;
@@ -95,11 +108,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
 
 
-
-
-
-
-
         Rank_Count=Rank_Count+1 ;
         String rank_String_count = String.valueOf(Rank_Count) ;
 
@@ -117,18 +125,35 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean update_TotalClasses(String id,String Classestaken )
+
+
+    public long insertReminder(int id,String date ,String time )
     {
-        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase() ;
-        ContentValues contentValues_update = new ContentValues() ;
-        contentValues_update.put(Classes,Classestaken);
+
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase() ;
+        ContentValues contentValues = new ContentValues() ;
+        contentValues.put(Ref_id,id);
+        contentValues.put(Date,date);
+        contentValues.put(Time,time);
+
         //sqLiteDatabase.insert(Tuition_name,null,contentValues) ;
-         sqLiteDatabase.update(Table_name,contentValues_update,"rank_id = ?",new String[]{id}) ;
+        long check_id = sqLiteDatabase.insert(Table_name_2,null,contentValues);
 
-        return true ;
 
+
+
+        return check_id;
     }
 
+
+
+
+
+
+
+
+   //display-------------------------------------------------------------------------------------------------------
 
     public Cursor displayAlldeta()
     {
@@ -152,6 +177,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         return cursorRemind ;
     }
+
+    //delete--------------------------------------------------------------------------------------------------------------------------
 
     public boolean deleteData(String id )
     {
@@ -203,27 +230,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
- /*   public Cursor display_ultimate(String passed) {
-
-        ID_Passed =passed ;
-
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase() ;
-        Cursor cursorRemind =sqLiteDatabase.rawQuery("SELECT * From "+Table_name+" where "+Tuition_id+" = "+ID_Passed,null);
-
-
-        return cursorRemind ;
-    } */
 
 
 
 
 
-
- //ALL update happening
-
-
-
-
+ //ALL update happening--------------------------------------------------------------------------------------------------------------------------
 
 
     public void update_name (String id,String name )
@@ -258,6 +270,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         //sqLiteDatabase.insert(Tuition_name,null,contentValues) ;
         sqLiteDatabase.update(Table_name,contentValues_update,"rank_id = ?",new String[]{id}) ;
 
+
+    }
+
+    public boolean update_TotalClasses(String id,String Classestaken )
+    {
+        SQLiteDatabase sqLiteDatabase= this.getWritableDatabase() ;
+        ContentValues contentValues_update = new ContentValues() ;
+        contentValues_update.put(Classes,Classestaken);
+        //sqLiteDatabase.insert(Tuition_name,null,contentValues) ;
+        sqLiteDatabase.update(Table_name,contentValues_update,"rank_id = ?",new String[]{id}) ;
+
+        return true ;
 
     }
 
